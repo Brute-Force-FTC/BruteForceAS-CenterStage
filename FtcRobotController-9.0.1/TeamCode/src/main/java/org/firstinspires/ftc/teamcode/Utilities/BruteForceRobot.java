@@ -51,6 +51,8 @@ import java.io.PrintStream;
 import com.qualcomm.robotcore.robot.Robot;
 import com.qualcomm.robotcore.util.Range;
 
+//Brute Force Code
+
 public class BruteForceRobot {
     public Orientation lastAngles = new Orientation();
     public BNO055IMU imu;
