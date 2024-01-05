@@ -280,6 +280,7 @@ public class BFTeleOp extends LinearOpMode{
 
                     if(gamepad2.left_bumper) {
                         robot.encoderClawArm(-1000);
+                        sleep(1);
                     }
 
                     idle();
