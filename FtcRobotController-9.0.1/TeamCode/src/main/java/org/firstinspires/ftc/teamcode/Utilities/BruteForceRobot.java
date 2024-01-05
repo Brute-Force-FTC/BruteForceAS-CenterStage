@@ -56,21 +56,21 @@ import com.qualcomm.robotcore.util.Range;
 public class BruteForceRobot {
     public Orientation lastAngles = new Orientation();
     public BNO055IMU imu;
-    //private Gyroscope imu;
+    private Blinker expansion_Hub_2;
+    private Blinker controlHub;
+    private HardwareDevice webcam_1;
     public DcMotor frontLeft;
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
-    private Blinker expansion_Hub_2;
-    private Blinker controlHub;
-    private HardwareDevice webcam_1;
-    public DcMotor RLAmotor;
-    public DcMotor LLAmotor;
-    public DcMotor clawArm;
-    public CRServo clawServo;
-    public CRServo clawRotator;
-    public CRServo testServo;
-    public DcMotor paperAirplane;
+    public DcMotor slideLeft;
+    public DcMotor slideRight;
+    public DcMotor intake;
+    //public DcMotor testMotor;
+    public CRServo intakeLeft;
+    public CRServo intakeRight;
+    public CRServo paperAirplane;
+    //public CRServo testServo;
 
     static final double     COUNTS_PER_MOTOR_REV    = 1075.2 ;
     static final double     COUNTS_PER_REV          = 10;
@@ -88,21 +88,21 @@ public class BruteForceRobot {
         parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.loggingEnabled = true;
         imu = hardwareMap.get(BNO055IMU.class, "imu");
-        //imu = hardwareMap.get(Gyroscope.class, "imu");
         controlHub = hardwareMap.get(Blinker.class, "Control Hub");
         expansion_Hub_2 = hardwareMap.get(Blinker.class, "Expansion Hub 2");
         webcam_1 = hardwareMap.get(HardwareDevice.class, "Webcam 1");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        clawServo = hardwareMap.get(CRServo.class, "clawServo");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        RLAmotor = hardwareMap.get(DcMotor.class, "RLAmotor");
-        LLAmotor = hardwareMap.get(DcMotor.class, "LLAmotor");
-        clawArm = hardwareMap.get(DcMotor.class, "clawArm");
-        paperAirplane = hardwareMap.get(DcMotor.class, "paperAirplane");
-        clawRotator = hardwareMap.get(CRServo.class, "clawRotator");
-        testServo = hardwareMap.get(CRServo.class, "testServo");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        slideLeft = hardwareMap.get(DcMotor.class, "slideLeft");
+        slideRight = hardwareMap.get(DcMotor.class, "slideRight");
+        intake = hardwareMap.get(DcMotor.class, "Intake");
+        //testMotor = hardwareMap.get(DcMotor.class, "testMotor");
+        intakeLeft = hardwareMap.get(CRServo.class, "IntakeLeft");
+        intakeRight = hardwareMap.get(CRServo.class, "IntakeRight");
+        paperAirplane = hardwareMap.get(CRServo.class, "paperAirplane");
+        //testServo = hardwareMap.get(CRServo.class, "testServo");
         imu.initialize(parameters);
     }
 
@@ -166,9 +166,10 @@ public class BruteForceRobot {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RLAmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LLAmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        clawArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //testMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void runUsingEncoder() {
@@ -176,16 +177,17 @@ public class BruteForceRobot {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        clawArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        intake.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //testMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void moveVertical(double n) {
-        frontLeft.setPower(n);
-        frontRight.setPower(-n);
-        backLeft.setPower(n);
-        backRight.setPower(-n);
+        frontLeft.setPower(-n);
+        frontRight.setPower(n);
+        backLeft.setPower(-n);
+        backRight.setPower(n);
     }
 
     public void moveHorizontal(double n) {
@@ -207,16 +209,17 @@ public class BruteForceRobot {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
-        RLAmotor.setPower(0);
-        LLAmotor.setPower(0);
-        clawArm.setPower(0);
+        slideLeft.setPower(0);
+        slideRight.setPower(0);
+        intake.setPower(0);
+        //testMotor.setPower(0);
     }
 
     public void sleep(double n) {
         sleep(n);
     }
 
-    /*public void encoderSL(int n) {
+    public void encoderSL(int n) {
         slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideLeft.setTargetPosition(n);
         slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -258,62 +261,6 @@ public class BruteForceRobot {
         slideRight.setPower(0);
         slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }*/
-
-    public void encoderLA(int n) {
-        RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RLAmotor.setTargetPosition(n);
-        LLAmotor.setTargetPosition(n);
-        RLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        LLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RLAmotor.setPower(-1);
-        LLAmotor.setPower(1);
-        while (RLAmotor.isBusy()) {
-            while (LLAmotor.isBusy()) {
-                ;
-            }
-        }
-        RLAmotor.setPower(0);
-        LLAmotor.setPower(0);
-        RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void encoderRLA(int n) {
-        RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RLAmotor.setTargetPosition(n);
-        RLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RLAmotor.setPower(-1);
-        while (RLAmotor.isBusy()) {
-            ;
-        }
-        RLAmotor.setPower(0);
-        RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void encoderLLA(int n) {
-        LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LLAmotor.setTargetPosition(n);
-        LLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        LLAmotor.setPower(-1);
-        while (RLAmotor.isBusy()) {
-            ;
-        }
-        LLAmotor.setPower(0);
-        LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void encoderClawArm(int n) {
-        clawArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        clawArm.setTargetPosition(n);
-        clawArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        clawArm.setPower(-1);
-        while (clawArm.isBusy()) {
-            ;
-        }
-        clawArm.setPower(0);
-        clawArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void encoderDriveIMU(String config, double gA, double Inches, double speed, boolean opModeIsActive, Telemetry telemetry) {

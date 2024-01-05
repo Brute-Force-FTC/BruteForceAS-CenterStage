@@ -48,8 +48,6 @@ public class MyTeleOp extends LinearOpMode{
             }
 
             if (rsy2 != 0) {
-                robot.RLAmotor.setPower(rsy2);
-                robot.LLAmotor.setPower(rsy2);
             } //else {
                 //if (robot.RLAmotor.getCurrentPosition() != robot.LLAmotor.getCurrentPosition()) {
                     //robot.LLAmotor.setPower((robot.LLAmotor.getCurrentPosition() - robot.RLAmotor.getCurrentPosition())*0.001);
@@ -62,101 +60,12 @@ public class MyTeleOp extends LinearOpMode{
             //}
 
             if (gamepad2.a) {
-                robot.clawServo.setPower(1);
-                sleep(600);
-                robot.clawServo.setPower(-1);
             }
 
             if (gamepad2.b) {
-                robot.clawRotator.setPower(1);
-                sleep(600);
-                robot.clawRotator.setPower(-1);
             }
 
             if (gamepad2.x) {
-                robot.testServo.setPower(1);
-                sleep(600);
-                robot.testServo.setPower(-1);
-            }
-
-            if (gamepad1.a) {
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.RLAmotor.setTargetPosition(2000);
-                robot.LLAmotor.setTargetPosition(2000);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.RLAmotor.setPower(1);
-                robot.LLAmotor.setPower(1);
-                while (robot.RLAmotor.isBusy()) {
-                    while (robot.LLAmotor.isBusy()) {
-                        ;
-                    }
-                }
-                robot.RLAmotor.setPower(0);
-                robot.LLAmotor.setPower(0);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
-
-            if (gamepad1.b) {
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.RLAmotor.setTargetPosition(2000);
-                robot.LLAmotor.setTargetPosition(2000);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.RLAmotor.setPower(-1);
-                robot.LLAmotor.setPower(1);
-                while (robot.RLAmotor.isBusy()) {
-                    while (robot.LLAmotor.isBusy()) {
-                        ;
-                    }
-                }
-                robot.RLAmotor.setPower(0);
-                robot.LLAmotor.setPower(0);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
-
-            if (gamepad1.x) {
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.RLAmotor.setTargetPosition(2000);
-                robot.LLAmotor.setTargetPosition(2000);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.RLAmotor.setPower(1);
-                robot.LLAmotor.setPower(-1);
-                while (robot.RLAmotor.isBusy()) {
-                    while (robot.LLAmotor.isBusy()) {
-                        ;
-                    }
-                }
-                robot.RLAmotor.setPower(0);
-                robot.LLAmotor.setPower(0);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            }
-
-            if (gamepad1.y) {
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.RLAmotor.setTargetPosition(2000);
-                robot.LLAmotor.setTargetPosition(2000);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                robot.RLAmotor.setPower(-1);
-                robot.LLAmotor.setPower(-1);
-                while (robot.RLAmotor.isBusy()) {
-                    while (robot.LLAmotor.isBusy()) {
-                        ;
-                    }
-                }
-                robot.RLAmotor.setPower(0);
-                robot.LLAmotor.setPower(0);
-                robot.RLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                robot.LLAmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             }
 
             //if (robot.RLAmotor.getCurrentPosition() != robot.LLAmotor.getCurrentPosition()) {
@@ -179,10 +88,6 @@ public class MyTeleOp extends LinearOpMode{
             telemetry.addData("frontRight Power", robot.frontRight.getPower());
             telemetry.addData("backLeft Power", robot.backLeft.getPower());
             telemetry.addData("backRight Power", robot.backRight.getPower());
-            telemetry.addData("LLA Encoder", robot.LLAmotor.getCurrentPosition());
-            telemetry.addData("RLA Encoder", robot.RLAmotor.getCurrentPosition());
-            telemetry.addData("clawArm Encoder", robot.clawArm.getCurrentPosition());
-            telemetry.addData("clawArm Power", robot.clawArm.getPower());
             telemetry.addData("Status", "Running");
             telemetry.update();
         }

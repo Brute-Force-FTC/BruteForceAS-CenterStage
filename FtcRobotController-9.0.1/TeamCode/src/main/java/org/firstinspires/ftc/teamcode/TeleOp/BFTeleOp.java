@@ -48,7 +48,7 @@ public class BFTeleOp extends LinearOpMode{
     double lsy2 = 0;
 
     public BFTeleOp() throws Exception {
-        RobotLog.d("Starting DriveTankMT");
+        RobotLog.d("Starting TeleOp");
     }
     
     @Override
@@ -57,15 +57,15 @@ public class BFTeleOp extends LinearOpMode{
         robot.resetEncoder();
         robot.runUsingEncoder();
 
-        Thread LAthread = new LAthread();
-        Thread armThread = new armThread();
-        Thread clawThread = new clawThread();
+        Thread slideThread = new slideThread();
+        Thread intakeThread = new intakeThread();
+        Thread airplane = new airplane();
 
         waitForStart();
 
-        LAthread.start();
-        armThread.start();
-        clawThread.start();
+        slideThread.start();
+        intakeThread.start();
+        airplane.start();
 
         try {
             while (opModeIsActive()) {
@@ -85,23 +85,9 @@ public class BFTeleOp extends LinearOpMode{
                 } else if (lsx1 != 0) {
                     robot.moveHorizontal(lsx1*0.5);
                 } else if (rsx1 != 0) {
-                    robot.rotate(rsx1);
+                    robot.rotate(rsx1*0.5);
                 } else {
                     robot.stopMoving();
-                }
-
-                if (gamepad1.a) {
-                    robot.paperAirplane.setPower(1);
-                    sleep(100);
-                    robot.paperAirplane.setPower(0);
-               }
-
-                if (gamepad1.b) {
-                    robot.testServo.setPower(1);
-                }
-
-                if (gamepad1.x) {
-                    robot.testServo.setPower(-1);
                 }
 
                 telemetry.addData("LSY1:", lsy1);
@@ -116,10 +102,10 @@ public class BFTeleOp extends LinearOpMode{
                 telemetry.addData("frontRight Power", robot.frontRight.getPower());
                 telemetry.addData("backLeft Power", robot.backLeft.getPower());
                 telemetry.addData("backRight Power", robot.backRight.getPower());
-                telemetry.addData("LLA Encoder", robot.LLAmotor.getCurrentPosition());
-                telemetry.addData("RLA Encoder", robot.RLAmotor.getCurrentPosition());
-                telemetry.addData("clawArm Encoder", robot.clawArm.getCurrentPosition());
-                telemetry.addData("clawArm Power", robot.clawArm.getPower());
+                telemetry.addData("SL Encoder", robot.slideLeft.getCurrentPosition());
+                telemetry.addData("SR Encoder", robot.slideRight.getCurrentPosition());
+                telemetry.addData("Intake Encoder", robot.intake.getCurrentPosition());
+                telemetry.addData("Intake Power", robot.intake.getPower());
                 telemetry.addData("Status", "Running");
                 telemetry.update();
 
@@ -128,16 +114,16 @@ public class BFTeleOp extends LinearOpMode{
         }
         catch(Exception e) {RobotLog.d(e.getMessage());}
 
-        LAthread.interrupt();
-        armThread.interrupt();
-        clawThread.interrupt();
+        slideThread.interrupt();
+        intakeThread.interrupt();
+        airplane.interrupt();
     }
 
-    private class LAthread extends Thread {
+    private class slideThread extends Thread {
         BruteForceRobot robot = new BruteForceRobot(hardwareMap);
 
-        public LAthread() {
-            this.setName("LAthread");
+        public slideThread() {
+            this.setName("slideThread");
             RobotLog.d("%s", this.getName());
         }
 
@@ -145,7 +131,7 @@ public class BFTeleOp extends LinearOpMode{
         public void run() {
             try {
                 while (!isInterrupted()) {
-                    //Linear Actuator Thread
+                    //Slide Kit Thread
 
                     lsy1 = gamepad1.left_stick_y;
                     lsx1 = gamepad1.left_stick_x;
@@ -157,8 +143,8 @@ public class BFTeleOp extends LinearOpMode{
                     rsx2 = gamepad2.right_stick_x;
 
                     if (rsy2 != 0) {
-                        robot.RLAmotor.setPower(-rsy2);
-                        robot.LLAmotor.setPower(-rsy2);
+                        robot.slideLeft.setPower(-rsy2);
+                        robot.slideRight.setPower(-rsy2);
                     } //else {
                         //if (robot.RLAmotor.getCurrentPosition() != robot.LLAmotor.getCurrentPosition()) {
                           //  robot.LLAmotor.setPower((robot.LLAmotor.getCurrentPosition() - robot.RLAmotor.getCurrentPosition())*0.001);
@@ -199,11 +185,11 @@ public class BFTeleOp extends LinearOpMode{
         }
     }
 
-    private class armThread extends Thread {
+    private class intakeThread extends Thread {
         BruteForceRobot robot = new BruteForceRobot(hardwareMap);
 
-        public armThread() {
-            this.setName("armThread");
+        public intakeThread() {
+            this.setName("intakeThread");
             RobotLog.d("%s", this.getName());
         }
 
@@ -211,7 +197,7 @@ public class BFTeleOp extends LinearOpMode{
         public void run() {
             try {
                 while (!isInterrupted()) {
-                    //Claw Arm Thread
+                    //Intake Thread
 
                     lsy1 = gamepad1.left_stick_y;
                     lsx1 = gamepad1.left_stick_x;
@@ -223,7 +209,7 @@ public class BFTeleOp extends LinearOpMode{
                     rsx2 = gamepad2.right_stick_x;
 
                     if (lsy2 != 0) {
-                        robot.clawArm.setPower(lsy2);
+                        robot.intake.setPower(lsy2);
                     } else {
                         //robot.clawArm.setPower(0.01);
                     }
@@ -234,11 +220,11 @@ public class BFTeleOp extends LinearOpMode{
         }
     }
 
-    private class clawThread extends Thread {
+    private class airplane extends Thread {
         BruteForceRobot robot = new BruteForceRobot(hardwareMap);
 
-        public clawThread() {
-            this.setName("clawThread");
+        public airplane() {
+            this.setName("airplane");
             RobotLog.d("%s", this.getName());
         }
 
@@ -246,7 +232,7 @@ public class BFTeleOp extends LinearOpMode{
         public void run() {
             try {
                 while(!isInterrupted()) {
-                    //Claw Thread
+                    //Paper Airplane Thread
 
                     lsy1 = gamepad1.left_stick_y;
                     lsx1 = gamepad1.left_stick_x;
@@ -258,29 +244,27 @@ public class BFTeleOp extends LinearOpMode{
                     rsx2 = gamepad2.right_stick_x;
 
                     if (gamepad2.a) {
-                        robot.clawServo.setPower(0.12);
+                        robot.intakeLeft.setPower(-1); //down
                     }
 
                     if (gamepad2.b) {
-                        robot.clawRotator.setPower(1);
+                        robot.intakeLeft.setPower(1); //up
                     }
 
                     if (gamepad2.x) {
-                        robot.clawServo.setPower(1);
+                        robot.intakeRight.setPower(-1); //up
                     }
 
                     if (gamepad2.y) {
-                        robot.clawRotator.setPower(-1);
+                        robot.intakeRight.setPower(1); //down
                     }
 
                     if (gamepad2.right_bumper) {
-                        robot.encoderClawArm(-200);
-                        robot.clawServo.setPower(1);
+                        robot.paperAirplane.setPower(-1);
                     }
 
                     if(gamepad2.left_bumper) {
-                        robot.encoderClawArm(-1000);
-                        sleep(1);
+                        robot.paperAirplane.setPower(1);
                     }
 
                     idle();

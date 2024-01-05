@@ -47,9 +47,6 @@ public class BlueDropAuto extends LinearOpMode{
             robot.encoderDrive("f", 10 , 0.5, opModeIsActive(), telemetry);
 
             //Move arm up
-            robot.clawArm.setPower(-0.5);
-            sleep(1500);
-            robot.clawArm.setPower(0);
 
             //Turn all the way so the robot is facing the spike marks
             //robot.encoderDrive("rr", 20, 0.5, opModeIsActive(), telemetry);
@@ -73,9 +70,6 @@ public class BlueDropAuto extends LinearOpMode{
             robot.encoderDrive("b", 10 , 0.5, opModeIsActive(), telemetry);
 
             //Move arm up
-            robot.clawArm.setPower(-0.5);
-            sleep(1500);
-            robot.clawArm.setPower(0);
 
             //Turn all the way so the robot is facing the spike marks
             robot.encoderDrive("rr", 20, 0.5, opModeIsActive(), telemetry);
@@ -84,7 +78,6 @@ public class BlueDropAuto extends LinearOpMode{
             robot.encoderDrive("f", 5, 0.5, opModeIsActive(), telemetry);
 
             //Open claw
-            robot.clawServo.setPower(open);
 
             //Rotate left so robot is facing backdrop
             robot.encoderDrive("rl", 10, 0.5, opModeIsActive(), telemetry);
@@ -96,9 +89,6 @@ public class BlueDropAuto extends LinearOpMode{
             robot.encoderDrive("b", 10 , 0.5, opModeIsActive(), telemetry);
 
             //Move arm up
-            robot.clawArm.setPower(-0.5);
-            sleep(1500);
-            robot.clawArm.setPower(0);
 
             //Turn all the way so the robot is facing the spike marks
             robot.encoderDrive("rr", 20, 0.5, opModeIsActive(), telemetry);
@@ -107,7 +97,6 @@ public class BlueDropAuto extends LinearOpMode{
             robot.encoderDrive("rr", 5, 0.5, opModeIsActive(), telemetry);
 
             //Open claw
-            robot.clawServo.setPower(open);
 
             //Move backward to avoid hitting the truss
             robot.encoderDrive("b", 5 , 0.5, opModeIsActive(), telemetry);
