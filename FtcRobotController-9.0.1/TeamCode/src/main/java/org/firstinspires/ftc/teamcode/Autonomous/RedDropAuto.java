@@ -44,17 +44,15 @@ public class RedDropAuto extends LinearOpMode{
 
         if (pos == 1) {
             //Move backwards to go towards the spike marks
-            //robot.encoderDrive("f", 10 , 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("f", 3 , 0.5, opModeIsActive(), telemetry);
 
             //Move arm up
-            sleep(1500);
 
             //Turn all the way so the robot is facing the spike marks
             //robot.encoderDrive("rr", 20, 0.5, opModeIsActive(), telemetry);
 
             //Turn left to face the left spike mark
-            robot.encoderDrive("r", 50, 0.25, opModeIsActive(), telemetry);
-
+            //robot.encoderDrive("rr", 10, 0.5, opModeIsActive(), telemetry);
 
             //Open claw
             //robot.clawServo.setPower(open);
@@ -66,7 +64,7 @@ public class RedDropAuto extends LinearOpMode{
             //robot.encoderDrive("rl", 5, 0.5, opModeIsActive(), telemetry);
 
             //Move forward to park
-            //robot.encoderDrive("b", 50, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("r", 40, 0.5, opModeIsActive(), telemetry);
         } else if (pos == 2) {
             //Move backwards to go towards the spike marks
             robot.encoderDrive("b", 10 , 0.5, opModeIsActive(), telemetry);

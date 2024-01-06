@@ -28,7 +28,7 @@ public class TensorFlowUtils {
     private Gyroscope imu;
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "model_CSTSE.tflite";
+    private static final String TFOD_MODEL_ASSET = "model_3.tflite";
     private static final String[] LABELS = {
             "BlueTSE",
             "RedTSE"

@@ -36,14 +36,13 @@ public class RedPixelAuto extends LinearOpMode{
         int pos = utils.returnTSEPosition(opModeIsActive(), telemetry);
 
         //robot.encoderDrive("r", 1, 0.5, opModeIsActive(), telemetry);
-        robot.frontLeft.setPower(1);
-        robot.frontRight.setPower(1);
-        robot.backLeft.setPower(-1);
-        robot.backRight.setPower(-1);
-        sleep(700);
-        robot.frontLeft.setPower(0);
-        robot.frontRight.setPower(0);
-        robot.backLeft.setPower(0);
-        robot.backRight.setPower(0);
+
+        pos = 1;
+
+        if (pos == 1) {
+            robot.encoderDrive("f", 20, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("rr", 10, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("f", 75, 0.5, opModeIsActive(), telemetry);
+        }
     }
 }

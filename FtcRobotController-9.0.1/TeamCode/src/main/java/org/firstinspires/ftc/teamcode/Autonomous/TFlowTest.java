@@ -46,7 +46,7 @@ import java.util.List;
 public class TFlowTest extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "model_CSTSE.tflite";
+    private static final String TFOD_MODEL_ASSET = "model_3.tflite";
     //private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/myCustomModel.tflite";
     private static final String[] LABELS = {
             "BlueTSE",

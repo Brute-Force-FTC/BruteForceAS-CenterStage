@@ -39,6 +39,8 @@ public class BluePixelAuto extends LinearOpMode{
 
         //close claw
 
+        pos = 2;
+
         if (pos == 1) {
             //Move forward towards spike marks
             robot.encoderDrive("f", 12, 0.5, opModeIsActive(), telemetry);
@@ -75,6 +77,10 @@ public class BluePixelAuto extends LinearOpMode{
 
             //Move forward to get into the parking spot
             robot.encoderDrive("f", 5, 0.5, opModeIsActive(), telemetry);
+        } else if (pos == 2) {
+            robot.encoderDrive("f", 20, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("rl", 10, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("f", 75, 0.5, opModeIsActive(), telemetry);
         }
         //robot.encoderDrive("r", 1, 0.5, opModeIsActive(), telemetry);
         sleep(700);

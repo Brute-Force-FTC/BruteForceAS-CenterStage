@@ -44,7 +44,14 @@ public class BlueDropAuto extends LinearOpMode{
 
         if (pos == 1) {
             //Move backwards to go towards the spike marks
-            robot.encoderDrive("f", 10 , 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("f", 3 , 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("rl", 20, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("f", 25 , 0.5, opModeIsActive(), telemetry);
+            robot.intakeLeft.setPower(-1);
+            robot.encoderDrive("b", 10 , 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("r", 5 , 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("f", 5 , 0.5, opModeIsActive(), telemetry);
+
 
             //Move arm up
 
@@ -52,7 +59,7 @@ public class BlueDropAuto extends LinearOpMode{
             //robot.encoderDrive("rr", 20, 0.5, opModeIsActive(), telemetry);
 
             //Turn left to face the left spike mark
-            robot.encoderDrive("rr", 10, 0.5, opModeIsActive(), telemetry);
+            //robot.encoderDrive("rr", 10, 0.5, opModeIsActive(), telemetry);
 
             //Open claw
             //robot.clawServo.setPower(open);
@@ -64,7 +71,7 @@ public class BlueDropAuto extends LinearOpMode{
             //robot.encoderDrive("rl", 5, 0.5, opModeIsActive(), telemetry);
 
             //Move forward to park
-            robot.encoderDrive("b", 40, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("l", 40, 0.5, opModeIsActive(), telemetry);
         } else if (pos == 2) {
             //Move backwards to go towards the spike marks
             robot.encoderDrive("b", 10 , 0.5, opModeIsActive(), telemetry);

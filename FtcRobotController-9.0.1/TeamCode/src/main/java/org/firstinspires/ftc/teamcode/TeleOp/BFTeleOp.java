@@ -103,8 +103,9 @@ public class BFTeleOp extends LinearOpMode{
                 telemetry.addData("backLeft Power", robot.backLeft.getPower());
                 telemetry.addData("backRight Power", robot.backRight.getPower());
                 telemetry.addData("SL Encoder", robot.slideLeft.getCurrentPosition());
+                telemetry.addData("SL Power", robot.slideLeft.getPower());
                 telemetry.addData("SR Encoder", robot.slideRight.getCurrentPosition());
-                telemetry.addData("Intake Encoder", robot.intake.getCurrentPosition());
+                telemetry.addData("SR Power", robot.slideRight.getPower());
                 telemetry.addData("Intake Power", robot.intake.getPower());
                 telemetry.addData("Status", "Running");
                 telemetry.update();
@@ -244,11 +245,11 @@ public class BFTeleOp extends LinearOpMode{
                     rsx2 = gamepad2.right_stick_x;
 
                     if (gamepad2.a) {
-                        robot.intakeLeft.setPower(-1); //down
+                        robot.intakeLeft.setPower(-1); //up
                     }
 
                     if (gamepad2.b) {
-                        robot.intakeLeft.setPower(1); //up
+                        robot.intakeLeft.setPower(1); //down
                     }
 
                     if (gamepad2.x) {

@@ -388,15 +388,15 @@ public class BruteForceRobot {
             double backRightInches = 0;
 
             if (config == "f") {
-                frontLeftInches = -Inches;
-                frontRightInches = Inches;
-                backLeftInches = -Inches;
-                backRightInches = Inches;
-            } else if (config == "b") {
                 frontLeftInches = Inches;
                 frontRightInches = -Inches;
                 backLeftInches = Inches;
                 backRightInches = -Inches;
+            } else if (config == "b") {
+                frontLeftInches = -Inches;
+                frontRightInches = Inches;
+                backLeftInches = -Inches;
+                backRightInches = Inches;
             } else if (config == "rl") {
                 frontLeftInches = Inches;
                 frontRightInches = Inches;
