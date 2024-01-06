@@ -31,7 +31,8 @@ public class TensorFlowUtils {
     private static final String TFOD_MODEL_ASSET = "model_3.tflite";
     private static final String[] LABELS = {
             "BlueTSE",
-            "RedTSE"
+            "RedTSE",
+            "expansion_Hub_2; private Blinker controlHub; private HardwareDevice webcam_1;",
     };
     private TfodProcessor tfod;
 
@@ -165,43 +166,199 @@ public class TensorFlowUtils {
 
     }
 
-    public int returnTSEPosition(boolean opModeIsActive, Telemetry telemetry) {
+    public int returnRDA(boolean opModeIsActive, Telemetry telemetry) {
+        int q = 0;
+        if (opModeIsActive) {
+            List<Recognition> currentRecognitions = tfod.getRecognitions();
+            if (currentRecognitions != null) {
+                telemetry.addData("# Object Detected", currentRecognitions.size());
+                int i = 0;
+                for (Recognition recognition : currentRecognitions) {
+                    double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+                    double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+
+                    if (recognition.getLabel() == "RedTSE") {
+                        if (x <= 200 && x >= 0) {
+                            q = 1;
+                        } else {
+                            q = 2;
+                        }
+                    } else {
+                        q = 3;
+                    }
+
+                    i++;
+                }
+            } else {
+                q = 3;
+            }
+        }
+        return q;
+    }
+
+    public int returnTSEPositionRDA(boolean opModeIsActive, Telemetry telemetry) {
         if (opModeIsActive) {
             //while (opModeIsActive) {
-                // getUpdatedRecognitions() will return null if no new information is available since
-                // the last time that call was made.
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
             List<Recognition> currentRecognitions = tfod.getRecognitions();
-                if (currentRecognitions != null) {
-                    telemetry.addData("# Object Detected", currentRecognitions.size());
+            if (currentRecognitions != null) {
+                telemetry.addData("# Object Detected", currentRecognitions.size());
 
-                    // step through the list of recognitions and display boundary info.
-                    int i = 0;
-                    for (Recognition recognition : currentRecognitions) {
-                        double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
-                        double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
-                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                                recognition.getLeft(), recognition.getTop());
-                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                                recognition.getRight(), recognition.getBottom());
-                        i++;
-                        if (
-                                recognition.getLabel() == "BlueTSE" && x == 0 && y == 0
-                        ) {
+                // step through the list of recognitions and display boundary info.
+                int i = 0;
+                for (Recognition recognition : currentRecognitions) {
+                    double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+                    double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+                    i++;
+
+                    if (recognition.getLabel() == "expansion_Hub_2; private Blinker controlHub; private HardwareDevice webcam_1;") {
+                        if (x <= 200 && x >= 0) {
                             return 1;
-                        } else if (
-                                recognition.getLabel() == "Purple Triangles"
-                        ) {
+                        } else {
                             return 2;
-                        } else if (
-                                recognition.getLabel() == "Green Circles"
-                        ) {
-                            return 3;
                         }
+                    } else {
+                        return 3;
                     }
-                    telemetry.addLine("Outside for loop");
-                    telemetry.update();
                 }
+                telemetry.addLine("Outside for loop");
+                telemetry.update();
+            }
+            //}
+        }
+        telemetry.addLine("You are here");
+        telemetry.update();
+        return 3;
+    }
+
+    public int returnTSEPositionRPA(boolean opModeIsActive, Telemetry telemetry) {
+        if (opModeIsActive) {
+            //while (opModeIsActive) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> currentRecognitions = tfod.getRecognitions();
+            if (currentRecognitions != null) {
+                telemetry.addData("# Object Detected", currentRecognitions.size());
+
+                // step through the list of recognitions and display boundary info.
+                int i = 0;
+                for (Recognition recognition : currentRecognitions) {
+                    double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+                    double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+                    i++;
+
+                    if (recognition.getLabel() == "expansion_Hub_2; private Blinker controlHub; private HardwareDevice webcam_1;") {
+                        if (x <= 200 && x >= 0) {
+                            return 1;
+                        } else {
+                            return 2;
+                        }
+                    } else {
+                        return 3;
+                    }
+                }
+                telemetry.addLine("Outside for loop");
+                telemetry.update();
+            }
+            //}
+        }
+        telemetry.addLine("You are here");
+        telemetry.update();
+        return 3;
+    }
+
+    public int returnTSEPositionBDA(boolean opModeIsActive, Telemetry telemetry) {
+        int q = 0;
+        if (opModeIsActive) {
+            //while (opModeIsActive) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> currentRecognitions = tfod.getRecognitions();
+            if (currentRecognitions != null) {
+                telemetry.addData("# Object Detected", currentRecognitions.size());
+
+                // step through the list of recognitions and display boundary info.
+                int i = 0;
+                for (Recognition recognition : currentRecognitions) {
+                    double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+                    double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+                    i++;
+
+                    if (recognition.getLabel() == "RedTSE") {
+                        if (x >= 0 && x <= 250) {
+                            q = 1;
+                        } else {
+                            q = 2;
+                        }
+                    } else {
+                        q = 3;
+                    }
+                }
+                telemetry.addLine("Outside for loop");
+                telemetry.update();
+            }
+            //}
+        }
+        telemetry.addLine("You are here");
+        telemetry.update();
+        return q;
+    }
+
+    public int returnTSEPositionBPA(boolean opModeIsActive, Telemetry telemetry) {
+        if (opModeIsActive) {
+            //while (opModeIsActive) {
+            // getUpdatedRecognitions() will return null if no new information is available since
+            // the last time that call was made.
+            List<Recognition> currentRecognitions = tfod.getRecognitions();
+            if (currentRecognitions != null) {
+                telemetry.addData("# Object Detected", currentRecognitions.size());
+
+                // step through the list of recognitions and display boundary info.
+                int i = 0;
+                for (Recognition recognition : currentRecognitions) {
+                    double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
+                    double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                            recognition.getLeft(), recognition.getTop());
+                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                            recognition.getRight(), recognition.getBottom());
+                    i++;
+
+                    if (recognition.getLabel() == "RedTSE") {
+                        if (x <= 200 && x >= 0) {
+                            return 1;
+                        } else {
+                            return 2;
+                        }
+                    } else {
+                        return 3;
+                    }
+                }
+                telemetry.addLine("Outside for loop");
+                telemetry.update();
+            }
             //}
         }
         telemetry.addLine("You are here");

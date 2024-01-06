@@ -52,7 +52,10 @@ public class BasicAuto extends LinearOpMode{
         waitForStart();
         robot.resetEncoder();
         robot.runUsingEncoder();
-        int pos = utils.returnTSEPosition(opModeIsActive(), telemetry);
+        sleep(2500);
+        int pos = utils.returnTSEPositionBDA(opModeIsActive(), telemetry);
+        telemetry.addData("pos", pos);
+        telemetry.update();
 
         robot.resetAngle(globalAngle);
         correction = robot.checkDirectionB(globalAngle, telemetry);
@@ -66,7 +69,16 @@ public class BasicAuto extends LinearOpMode{
         //robot.encoderDrive("rr", 5, 0.5, opModeIsActive(), telemetry); //turn left
         //robot.encoderDrive("rl", 5, 0.5, opModeIsActive(), telemetry); //turn right
 
+        //robot.intakeLeft.setPower(-1);
         robot.intakeLeft.setPower(-1);
-        sleep(5000);
+        sleep(500);
+        robot.intakeLeft.setPower(1);
+        sleep(500);
+        robot.intake.setPower(1);
+        sleep(500);
+        sleep(15000);
+
+        utils.telemetryTfod(telemetry);
+        telemetry.update();
     }
 }

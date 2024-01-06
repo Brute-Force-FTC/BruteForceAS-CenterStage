@@ -33,56 +33,126 @@ public class BluePixelAuto extends LinearOpMode{
         waitForStart();
         robot.resetEncoder();
         robot.runUsingEncoder();
-        int pos = utils.returnTSEPosition(opModeIsActive(), telemetry);
-        double open = 1;
-        double close = -1;
-
-        //close claw
-
-        pos = 2;
+        sleep(500);
+        int pos = utils.returnTSEPositionBPA(opModeIsActive(), telemetry);
 
         if (pos == 1) {
-            //Move forward towards spike marks
+            //Move forward right before all 3 spike marks
+            robot.encoderDrive("f", 5 , 0.5, opModeIsActive(), telemetry);
+
+            //Turn left so that the ramp is facing the left spike mark
+            robot.encoderDrive("rl",  10, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake so the purple pixel drops
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Back up to go to the parking area
+            robot.encoderDrive("b", 15, 0.5, opModeIsActive(), telemetry);
+
+            //Close the intake
+            sleep(500);
+            robot.intakeLeft.setPower(1);
+
+            //Rotate left so that the robot is facing the backdrop
+            robot.encoderDrive("rl", 10, 0.5, opModeIsActive(), telemetry);
+
+            //Move forward so the ramp is inside of the parking area
+            robot.encoderDrive("f", 50, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Spin the intake
+            sleep(500);
+            robot.intake.setPower(1);
+            sleep(1000);
+            robot.intake.setPower(0);
+
+            //Move the robot backward so a little is still in parking
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
+        } else if (pos == 2) {
+            //Move forward until the ramp is on the middle spike mark
             robot.encoderDrive("f", 12, 0.5, opModeIsActive(), telemetry);
 
-            //Turn left to face the left spike mark
-            robot.encoderDrive("rl", 5, 0.5, opModeIsActive(), telemetry);
+            //Open the intake so the purple pixel drops
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
 
-            //Open claw
+            //Back up to go to the parking area
+            robot.encoderDrive("b", 10, 0.5, opModeIsActive(), telemetry);
 
-            //Lift arm up
+            //Close the intake
+            sleep(500);
+            robot.intakeLeft.setPower(1);
 
-            //Close claw
+            //Rotate left so that the robot is facing the backdrop
+            robot.encoderDrive("rl", 20, 0.5, opModeIsActive(), telemetry);
 
-            //Move forward towards the backdrop
-            robot.encoderDrive("f", 5, 0.5, opModeIsActive(), telemetry);
+            //Move forward so the ramp is inside of the parking area
+            robot.encoderDrive("f", 50, 0.5, opModeIsActive(), telemetry);
 
-            //Turn left so robot is facing backdrop
-            robot.encoderDrive("rl", 3, 0.5, opModeIsActive(), telemetry);
+            //Open the intake
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
 
-            //Move forward so claw is on the backdrop
-            robot.encoderDrive("f", 3, 0.5, opModeIsActive(), telemetry);
+            //Spin the intake
+            sleep(500);
+            robot.intake.setPower(1);
+            sleep(1000);
+            robot.intake.setPower(0);
 
-            //Open claw
+            //Move the robot backward so a little is still in parking
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
+        } else if (pos == 3) {
+            //Move forward right before all 3 spike marks
+            robot.encoderDrive("f", 5 , 0.5, opModeIsActive(), telemetry);
 
-            //Move backward
-            robot.encoderDrive("b", 5, 0.5, opModeIsActive(), telemetry);
+            //Turn right so that the ramp is facing the right spike mark
+            robot.encoderDrive("rr",  10, 0.5, opModeIsActive(), telemetry);
 
-            //Close claw
+            //Open the intake so the purple pixel drops
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
 
-            //Move arm down
+            //Back up to go to the parking area
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
 
-            //Strafe right to park
-            robot.encoderDrive("r", 10, 0.5, opModeIsActive(), telemetry);
+            //Close the intake
+            sleep(500);
+            robot.intakeLeft.setPower(1);
 
-            //Move forward to get into the parking spot
-            robot.encoderDrive("f", 5, 0.5, opModeIsActive(), telemetry);
-        } else if (pos == 2) {
-            robot.encoderDrive("f", 20, 0.5, opModeIsActive(), telemetry);
+            //Rotate left so the robot is facing straight
             robot.encoderDrive("rl", 10, 0.5, opModeIsActive(), telemetry);
-            robot.encoderDrive("f", 75, 0.5, opModeIsActive(), telemetry);
+
+            //Move backward so the robot is aligned to the parking area
+            robot.encoderDrive("b", 8, 0.5, opModeIsActive(), telemetry);
+
+            //Rotate left so that the robot is facing the backdrop
+            robot.encoderDrive("rl", 20, 0.5, opModeIsActive(), telemetry);
+
+            //Move forward so the ramp is inside of the parking area
+            robot.encoderDrive("f", 50, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Spin the intake
+            sleep(500);
+            robot.intake.setPower(1);
+            sleep(1000);
+            robot.intake.setPower(0);
+
+            //Move the robot backward so a little is still in the parking space
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
         }
-        //robot.encoderDrive("r", 1, 0.5, opModeIsActive(), telemetry);
-        sleep(700);
     }
 }

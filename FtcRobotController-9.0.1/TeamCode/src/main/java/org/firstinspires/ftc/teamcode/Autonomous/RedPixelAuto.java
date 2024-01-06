@@ -33,16 +33,126 @@ public class RedPixelAuto extends LinearOpMode{
         waitForStart();
         robot.resetEncoder();
         robot.runUsingEncoder();
-        int pos = utils.returnTSEPosition(opModeIsActive(), telemetry);
-
-        //robot.encoderDrive("r", 1, 0.5, opModeIsActive(), telemetry);
-
-        pos = 1;
+        sleep(500);
+        int pos = utils.returnTSEPositionRPA(opModeIsActive(), telemetry);
 
         if (pos == 1) {
-            robot.encoderDrive("f", 20, 0.5, opModeIsActive(), telemetry);
+            //Move forward right before all 3 spike marks
+            robot.encoderDrive("f", 5 , 0.5, opModeIsActive(), telemetry);
+
+            //Turn left so that the ramp is facing the left spike mark
+            robot.encoderDrive("rl",  10, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake so the purple pixel drops
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Back up to go to the parking area
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
+
+            //Close the intake
+            sleep(500);
+            robot.intakeLeft.setPower(1);
+
+            //Rotate right so the robot is facing straight
             robot.encoderDrive("rr", 10, 0.5, opModeIsActive(), telemetry);
-            robot.encoderDrive("f", 75, 0.5, opModeIsActive(), telemetry);
+
+            //Move backward so the robot is aligned to the parking area
+            robot.encoderDrive("b", 8, 0.5, opModeIsActive(), telemetry);
+
+            //Rotate right so that the robot is facing the backdrop
+            robot.encoderDrive("rr", 20, 0.5, opModeIsActive(), telemetry);
+
+            //Move forward so the ramp is inside of the parking area
+            robot.encoderDrive("f", 50, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Spin the intake
+            sleep(500);
+            robot.intake.setPower(1);
+            sleep(1000);
+            robot.intake.setPower(0);
+
+            //Move the robot backward so a little is still in the parking space
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
+        } else if (pos == 2) {
+            //Move forward until the ramp is on the middle spike mark
+            robot.encoderDrive("f", 12, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake so the purple pixel drops
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Back up to go to the parking area
+            robot.encoderDrive("b", 10, 0.5, opModeIsActive(), telemetry);
+
+            //Close the intake
+            sleep(500);
+            robot.intakeLeft.setPower(1);
+
+            //Rotate right so that the robot is facing the backdrop
+            robot.encoderDrive("rr", 20, 0.5, opModeIsActive(), telemetry);
+
+            //Move forward so the ramp is inside of the parking area
+            robot.encoderDrive("f", 50, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Spin the intake
+            sleep(500);
+            robot.intake.setPower(1);
+            sleep(1000);
+            robot.intake.setPower(0);
+
+            //Move the robot backward so a little is still in parking
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
+        } else if (pos == 3) {
+            //Move forward right before all 3 spike marks
+            robot.encoderDrive("f", 5 , 0.5, opModeIsActive(), telemetry);
+
+            //Turn right so that the ramp is facing the right spike mark
+            robot.encoderDrive("rr",  10, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake so the purple pixel drops
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Back up to go to the parking area
+            robot.encoderDrive("b", 15, 0.5, opModeIsActive(), telemetry);
+
+            //Close the intake
+            sleep(500);
+            robot.intakeLeft.setPower(1);
+
+            //Rotate right so that the robot is facing the backdrop
+            robot.encoderDrive("rr", 30, 0.5, opModeIsActive(), telemetry);
+
+            //Move forward so the ramp is inside of the parking area
+            robot.encoderDrive("f", 50, 0.5, opModeIsActive(), telemetry);
+
+            //Open the intake
+            sleep(500);
+            robot.intakeLeft.setPower(-1);
+            sleep(500);
+
+            //Spin the intake
+            sleep(500);
+            robot.intake.setPower(1);
+            sleep(1000);
+            robot.intake.setPower(0);
+
+            //Move the robot backward so a little is still in parking
+            robot.encoderDrive("b", 3, 0.5, opModeIsActive(), telemetry);
         }
     }
 }
