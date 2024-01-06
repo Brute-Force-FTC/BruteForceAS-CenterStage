@@ -33,8 +33,12 @@ public class BluePixelAuto extends LinearOpMode{
         waitForStart();
         robot.resetEncoder();
         robot.runUsingEncoder();
-        sleep(500);
         int pos = utils.returnTSEPositionBPA(opModeIsActive(), telemetry);
+        telemetry.addData("pos", pos);
+        telemetry.update();
+
+        int c = -1;
+        int o = 1;
 
         if (pos == 1) {
             //Move forward right before all 3 spike marks

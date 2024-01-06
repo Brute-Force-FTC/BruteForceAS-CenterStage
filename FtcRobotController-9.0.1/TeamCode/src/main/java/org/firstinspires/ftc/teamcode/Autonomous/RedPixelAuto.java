@@ -35,6 +35,11 @@ public class RedPixelAuto extends LinearOpMode{
         robot.runUsingEncoder();
         sleep(500);
         int pos = utils.returnTSEPositionRPA(opModeIsActive(), telemetry);
+        telemetry.addData("pos", pos);
+        telemetry.update();
+
+        int c = -1;
+        int o = 1;
 
         if (pos == 1) {
             //Move forward right before all 3 spike marks

@@ -62,21 +62,20 @@ public class BasicAuto extends LinearOpMode{
 
         //robot.encoderDriveIMU("f", globalAngle, 10, 1, opModeIsActive(), telemetry);
 
-        //robot.encoderDrive("f", 5, 0.5, opModeIsActive(), telemetry);
-        //robot.encoderDrive("b", 5, 0.5, opModeIsActive(), telemetry);
-        //robot.encoderDrive("r", 5, 0.5, opModeIsActive(), telemetry); //rot left
-        //robot.encoderDrive("l", 5, 0.5, opModeIsActive(), telemetry); //str right
-        //robot.encoderDrive("rr", 5, 0.5, opModeIsActive(), telemetry); //turn left
-        //robot.encoderDrive("rl", 5, 0.5, opModeIsActive(), telemetry); //turn right
+        robot.encoderDrive("f", 5, 0.5, opModeIsActive(), telemetry);
+        sleep(1000);
+        robot.encoderDrive("b", 5, 0.5, opModeIsActive(), telemetry);
+        sleep(1000);
+        robot.encoderDrive("r", 5, 0.5, opModeIsActive(), telemetry); //rot left
+        sleep(1000);
+        robot.encoderDrive("l", 5, 0.5, opModeIsActive(), telemetry); //str right
+        sleep(1000);
+        robot.encoderDrive("rr", 5, 0.5, opModeIsActive(), telemetry); //turn left
+        sleep(1000);
+        robot.encoderDrive("rl", 5, 0.5, opModeIsActive(), telemetry); //turn right
+        sleep(1000);
 
         //robot.intakeLeft.setPower(-1);
-        robot.intakeLeft.setPower(-1);
-        sleep(500);
-        robot.intakeLeft.setPower(1);
-        sleep(500);
-        robot.intake.setPower(1);
-        sleep(500);
-        sleep(15000);
 
         utils.telemetryTfod(telemetry);
         telemetry.update();
