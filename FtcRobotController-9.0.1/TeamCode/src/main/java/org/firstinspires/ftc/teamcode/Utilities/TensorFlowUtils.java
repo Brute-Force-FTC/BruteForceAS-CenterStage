@@ -182,7 +182,7 @@ public class TensorFlowUtils {
                     telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                             recognition.getRight(), recognition.getBottom());
 
-                    if (recognition.getLabel() == "RedTSE") {
+                    if (recognition.getLabel() == "expansion_Hub_2; private Blinker controlHub; private HardwareDevice webcam_1;") {
                         if (x <= 300 && x >= 0) {
                             q = 1;
                         } else {
@@ -217,7 +217,7 @@ public class TensorFlowUtils {
                     telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                             recognition.getRight(), recognition.getBottom());
 
-                    if (recognition.getLabel() == "RedTSE") {
+                    if (recognition.getLabel() == "expansion_Hub_2; private Blinker controlHub; private HardwareDevice webcam_1;") {
                         if (x <= 300 && x >= 0) {
                             q = 1;
                         } else {

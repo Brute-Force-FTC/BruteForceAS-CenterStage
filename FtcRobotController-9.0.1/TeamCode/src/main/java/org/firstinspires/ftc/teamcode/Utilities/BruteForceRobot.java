@@ -184,10 +184,10 @@ public class BruteForceRobot {
     }
 
     public void moveVertical(double n) {
-        frontLeft.setPower(-n);
-        frontRight.setPower(n);
-        backLeft.setPower(-n);
-        backRight.setPower(n);
+        frontLeft.setPower(n);
+        frontRight.setPower(-n);
+        backLeft.setPower(n);
+        backRight.setPower(-n);
     }
 
     public void moveHorizontal(double n) {

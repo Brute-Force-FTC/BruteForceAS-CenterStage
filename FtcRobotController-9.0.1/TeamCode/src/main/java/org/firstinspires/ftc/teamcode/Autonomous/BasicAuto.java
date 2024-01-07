@@ -53,7 +53,7 @@ public class BasicAuto extends LinearOpMode{
         robot.resetEncoder();
         robot.runUsingEncoder();
         sleep(2500);
-        int pos = utils.returnTSEPositionBDA(opModeIsActive(), telemetry);
+        int pos = utils.returnTSEPositionRDA(opModeIsActive(), telemetry);
         telemetry.addData("pos", pos);
         telemetry.update();
 
@@ -62,17 +62,17 @@ public class BasicAuto extends LinearOpMode{
 
         //robot.encoderDriveIMU("f", globalAngle, 10, 1, opModeIsActive(), telemetry);
 
-        robot.encoderDrive("f", 5, 0.5, opModeIsActive(), telemetry);
+        robot.encoderDriveIMU("f", globalAngle, 500,  0.5, opModeIsActive(), telemetry);
         sleep(1000);
-        robot.encoderDrive("b", 5, 0.5, opModeIsActive(), telemetry);
+        robot.encoderDriveIMU("b", globalAngle,15, 0.5, opModeIsActive(), telemetry);
         sleep(1000);
-        robot.encoderDrive("r", 5, 0.5, opModeIsActive(), telemetry); //rot left
+        robot.encoderDriveIMU("r", globalAngle,15, 0.5, opModeIsActive(), telemetry); //rot left
         sleep(1000);
-        robot.encoderDrive("l", 5, 0.5, opModeIsActive(), telemetry); //str right
+        robot.encoderDriveIMU("l", globalAngle,15, 0.5, opModeIsActive(), telemetry); //str right
         sleep(1000);
-        robot.encoderDrive("rr", 5, 0.5, opModeIsActive(), telemetry); //turn left
+        robot.encoderDriveIMU("rr", globalAngle,15, 0.5, opModeIsActive(), telemetry); //turn left
         sleep(1000);
-        robot.encoderDrive("rl", 5, 0.5, opModeIsActive(), telemetry); //turn right
+        robot.encoderDriveIMU("rl", globalAngle,15, 0.5, opModeIsActive(), telemetry); //turn right
         sleep(1000);
 
         //robot.intakeLeft.setPower(-1);
