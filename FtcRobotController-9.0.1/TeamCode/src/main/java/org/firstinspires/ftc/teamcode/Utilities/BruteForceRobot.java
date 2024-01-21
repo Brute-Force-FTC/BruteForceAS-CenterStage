@@ -183,6 +183,22 @@ public class BruteForceRobot {
         //testMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
+    public void moveForward(double speed, double gA, Telemetry telemetry) {
+        double correction = checkDirectionF(gA, telemetry);
+        frontLeft.setPower(-(speed-correction));
+        frontRight.setPower((speed+correction));
+        backLeft.setPower(-(speed-correction));
+        backRight.setPower((speed+correction));
+    }
+
+    public void moveBackward(double speed, double gA, Telemetry telemetry) {
+        double correction = checkDirectionB(gA, telemetry);
+        frontLeft.setPower((speed-correction));
+        frontRight.setPower(-(speed+correction));
+        backLeft.setPower((speed-correction));
+        backRight.setPower(-(speed+correction));
+    }
+
     public void moveVertical(double n) {
         frontLeft.setPower(n);
         frontRight.setPower(-n);

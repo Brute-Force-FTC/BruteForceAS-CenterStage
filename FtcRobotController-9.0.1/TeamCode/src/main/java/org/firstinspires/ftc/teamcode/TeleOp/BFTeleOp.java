@@ -79,8 +79,9 @@ public class BFTeleOp extends LinearOpMode{
                 lsx2 = this.gamepad2.left_stick_x;
                 rsy2 = this.gamepad2.right_stick_y;
                 rsx2 = this.gamepad2.right_stick_x;
+                double correction = 0;
 
-                if (lsy1 != 0) {
+                /*if (lsy1 != 0) {
                     robot.moveVertical(lsy1*0.5);
                 } else if (lsx1 != 0) {
                     robot.moveHorizontal(lsx1*0.5);
@@ -88,6 +89,10 @@ public class BFTeleOp extends LinearOpMode{
                     robot.rotate(rsx1*0.5);
                 } else {
                     robot.stopMoving();
+                }*/
+
+                while (lsy1 < 0) {
+                    //correction = robot.checkDirectionF
                 }
 
                 telemetry.addData("LSY1:", lsy1);
