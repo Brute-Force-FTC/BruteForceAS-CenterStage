@@ -93,6 +93,7 @@ public class BFTeleOp extends LinearOpMode{
 
                 while (lsy1 < 0) {
                     //correction = robot.checkDirectionF
+                    //check if it works
                 }
 
                 telemetry.addData("LSY1:", lsy1);
