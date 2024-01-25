@@ -47,6 +47,8 @@ public class BFTeleOp extends LinearOpMode{
     double lsx2 = 0;
     double lsy2 = 0;
 
+    double globalAngle, power = .30, correction;
+
     public BFTeleOp() throws Exception {
         RobotLog.d("Starting TeleOp");
     }
@@ -92,7 +94,8 @@ public class BFTeleOp extends LinearOpMode{
                 }*/
 
                 while (lsy1 < 0) {
-                    //correction = robot.checkDirectionF
+                    robot.resetAngle(globalAngle);
+                    correction = robot.checkDirectionF(globalAngle, telemetry);
                     //check if it works
                 }
 
