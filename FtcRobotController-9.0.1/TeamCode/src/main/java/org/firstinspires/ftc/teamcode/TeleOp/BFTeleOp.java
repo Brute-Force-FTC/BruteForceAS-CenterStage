@@ -69,6 +69,9 @@ public class BFTeleOp extends LinearOpMode{
         intakeThread.start();
         airplane.start();
 
+        robot.resetAngle(globalAngle);
+        correction = robot.checkDirectionF(globalAngle, telemetry);
+
         try {
             while (opModeIsActive()) {
                 //Main Thread
@@ -83,7 +86,7 @@ public class BFTeleOp extends LinearOpMode{
                 rsx2 = this.gamepad2.right_stick_x;
                 double correction = 0;
 
-                /*if (lsy1 != 0) {
+                if (lsy1 != 0) {
                     robot.moveVertical(lsy1*0.5);
                 } else if (lsx1 != 0) {
                     robot.moveHorizontal(lsx1*0.5);
@@ -91,13 +94,27 @@ public class BFTeleOp extends LinearOpMode{
                     robot.rotate(rsx1*0.5);
                 } else {
                     robot.stopMoving();
-                }*/
-
-                while (lsy1 < 0) {
-                    robot.resetAngle(globalAngle);
-                    correction = robot.checkDirectionF(globalAngle, telemetry);
-                    //check if it works
                 }
+
+                /*while (lsy1 < 0) {
+                    robot.moveForward(-lsy1, globalAngle, telemetry);
+                }
+
+                while (lsy1 > 0) {
+                    robot.moveBackward(-lsy1, globalAngle, telemetry);
+                }
+
+                while (lsx1 > 0) {
+                    robot.moveRight(lsx1, globalAngle, telemetry);
+                }
+
+                while (lsx1 < 0) {
+                    robot.moveLeft(lsx1, globalAngle, telemetry);
+                }
+
+                if (rsx1 != 0) {
+                    robot.rotate(rsx1*0.5);
+                }*/
 
                 telemetry.addData("LSY1:", lsy1);
                 telemetry.addData("LSX1:", lsx1);
@@ -153,7 +170,7 @@ public class BFTeleOp extends LinearOpMode{
                     rsx2 = gamepad2.right_stick_x;
 
                     if (rsy2 != 0) {
-                        robot.slideLeft.setPower(-rsy2);
+                        robot.slideLeft.setPower(rsy2);
                         robot.slideRight.setPower(-rsy2);
                     } //else {
                         //if (robot.RLAmotor.getCurrentPosition() != robot.LLAmotor.getCurrentPosition()) {
