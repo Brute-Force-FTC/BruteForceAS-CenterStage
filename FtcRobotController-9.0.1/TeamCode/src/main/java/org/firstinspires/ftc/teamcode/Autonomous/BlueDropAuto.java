@@ -37,8 +37,12 @@ public class BlueDropAuto extends LinearOpMode{
         telemetry.addData("pos", pos);
         telemetry.update();
 
-        int c = -1;
-        int o = 1;
+        double down = -0.3;
+        double up = 0;
+
+        pos = 2;
+
+        robot.intakeRight.setPower(down);
 
         if (pos == 1) {
             //Move forward right before all 3 spike marks
@@ -52,7 +56,7 @@ public class BlueDropAuto extends LinearOpMode{
 
             //Open the intake so the purple pixel drops
             sleep(500);
-            robot.intakeLeft.setPower(o);
+            robot.intakeLeft.setPower(up);
             sleep(500);
 
             //Back up to go to the parking area
@@ -60,7 +64,7 @@ public class BlueDropAuto extends LinearOpMode{
 
             //Close the intake
             sleep(500);
-            robot.intakeLeft.setPower(c);
+            robot.intakeLeft.setPower(down);
 
             //Rotate left so that the robot is facing the backdrop
             robot.encoderDrive("rl", 8, 0.5, opModeIsActive(), telemetry);
@@ -70,7 +74,7 @@ public class BlueDropAuto extends LinearOpMode{
 
             //Open the intake
             sleep(500);
-            robot.intakeLeft.setPower(o);
+            robot.intakeLeft.setPower(up);
             sleep(500);
 
             //Spin the intake
@@ -89,19 +93,21 @@ public class BlueDropAuto extends LinearOpMode{
             robot.encoderDrive("f", 20, 0.5, opModeIsActive(), telemetry);
         } else if (pos == 2) {
             //Move forward until the ramp is on the middle spike mark
-            robot.encoderDrive("f", 30, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("f", 27, 0.5, opModeIsActive(), telemetry);
 
             //Open the intake so the purple pixel drops
             sleep(500);
-            robot.intakeLeft.setPower(o);
+            robot.intakeRight.setPower(up);
             sleep(500);
 
             //Back up to go to the parking area
-            robot.encoderDrive("b", 5, 0.5, opModeIsActive(), telemetry);
+            robot.encoderDrive("b", 2, 0.5, opModeIsActive(), telemetry);
 
             //Close the intake
             sleep(500);
-            robot.intakeLeft.setPower(c);
+            robot.intakeLeft.setPower(down);
+
+            robot.encoderDrive("b", 5, 0.5, opModeIsActive(), telemetry);
 
             //Rotate left so that the robot is facing the backdrop
             robot.encoderDrive("rl", 20, 0.5, opModeIsActive(), telemetry);
@@ -111,7 +117,7 @@ public class BlueDropAuto extends LinearOpMode{
 
             //Open the intake
             sleep(500);
-            robot.intakeLeft.setPower(o);
+            robot.intakeLeft.setPower(up);
             sleep(500);
 
             //Spin the intake
@@ -140,7 +146,7 @@ public class BlueDropAuto extends LinearOpMode{
 
             //Open the intake so the purple pixel drops
             sleep(500);
-            robot.intakeLeft.setPower(o);
+            robot.intakeLeft.setPower(up);
             sleep(500);
 
             //Back up to go to the parking area
@@ -148,7 +154,7 @@ public class BlueDropAuto extends LinearOpMode{
 
             //Close the intake
             sleep(500);
-            robot.intakeLeft.setPower(c);
+            robot.intakeLeft.setPower(down);
 
             //Rotate left so that the robot is facing the backdrop
             robot.encoderDrive("rl", 28, 0.5, opModeIsActive(), telemetry);
@@ -158,7 +164,7 @@ public class BlueDropAuto extends LinearOpMode{
 
             //Open the intake
             sleep(500);
-            robot.intakeLeft.setPower(o);
+            robot.intakeLeft.setPower(up);
             sleep(500);
 
             //Spin the intake

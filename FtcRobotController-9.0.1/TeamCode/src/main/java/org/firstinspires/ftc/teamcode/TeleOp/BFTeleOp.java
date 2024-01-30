@@ -279,11 +279,11 @@ public class BFTeleOp extends LinearOpMode{
                     }
 
                     if (gamepad2.x) {
-                        robot.intakeRight.setPower(-1); //up
+                        robot.intakeRight.setPower(-0.3); //down
                     }
 
                     if (gamepad2.y) {
-                        robot.intakeRight.setPower(1); //down
+                        robot.intakeRight.setPower(0); //up
                     }
 
                     if (gamepad2.right_bumper) {

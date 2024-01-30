@@ -62,17 +62,17 @@ public class BasicAuto extends LinearOpMode{
 
         //robot.encoderDriveIMU("f", globalAngle, 10, 1, opModeIsActive(), telemetry);
 
-        robot.encoderDriveIMU("f", globalAngle, 500,  0.5, opModeIsActive(), telemetry);
+        robot.encoderDriveIMU("f", globalAngle, 24,  0.5, opModeIsActive(), telemetry);
         sleep(1000);
-        robot.encoderDriveIMU("b", globalAngle,15, 0.5, opModeIsActive(), telemetry);
+        robot.encoderDriveIMU("b", globalAngle,10, 0.5, opModeIsActive(), telemetry);
         sleep(1000);
-        robot.encoderDriveIMU("r", globalAngle,15, 0.5, opModeIsActive(), telemetry); //rot left
+        robot.encoderDriveIMU("r", globalAngle,10, 0.5, opModeIsActive(), telemetry); //rot left
         sleep(1000);
-        robot.encoderDriveIMU("l", globalAngle,15, 0.5, opModeIsActive(), telemetry); //str right
+        robot.encoderDriveIMU("l", globalAngle,10, 0.5, opModeIsActive(), telemetry); //str right
         sleep(1000);
-        robot.encoderDriveIMU("rr", globalAngle,15, 0.5, opModeIsActive(), telemetry); //turn left
+        robot.encoderDriveIMU("rr", globalAngle,10, 0.5, opModeIsActive(), telemetry); //turn left
         sleep(1000);
-        robot.encoderDriveIMU("rl", globalAngle,15, 0.5, opModeIsActive(), telemetry); //turn right
+        robot.encoderDriveIMU("rl", globalAngle,10, 0.5, opModeIsActive(), telemetry); //turn right
         sleep(1000);
 
         //robot.intakeLeft.setPower(-1);
