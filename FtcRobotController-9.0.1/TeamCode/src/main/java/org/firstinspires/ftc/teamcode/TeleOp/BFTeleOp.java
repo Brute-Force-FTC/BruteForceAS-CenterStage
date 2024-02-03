@@ -56,18 +56,16 @@ public class BFTeleOp extends LinearOpMode{
     @Override
     public void runOpMode() throws InterruptedException {
         BruteForceRobot robot = new BruteForceRobot(hardwareMap);
-        robot.resetEncoder();
-        robot.runUsingEncoder();
+        robot.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         Thread slideThread = new slideThread();
         Thread intakeThread = new intakeThread();
-        Thread airplane = new airplane();
 
         waitForStart();
 
         slideThread.start();
         intakeThread.start();
-        airplane.start();
 
         robot.resetAngle(globalAngle);
         correction = robot.checkDirectionF(globalAngle, telemetry);
@@ -76,45 +74,21 @@ public class BFTeleOp extends LinearOpMode{
             while (opModeIsActive()) {
                 //Main Thread
 
-                lsy1 = this.gamepad1.left_stick_y;
-                lsx1 = this.gamepad1.left_stick_x;
-                rsy1 = this.gamepad1.right_stick_y;
-                rsx1 = this.gamepad1.right_stick_x;
-                lsy2 = this.gamepad2.left_stick_y;
-                lsx2 = this.gamepad2.left_stick_x;
-                rsy2 = this.gamepad2.right_stick_y;
-                rsx2 = this.gamepad2.right_stick_x;
                 double correction = 0;
+                double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+                double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+                double rx = gamepad1.right_stick_x;
 
-                if (lsy1 != 0) {
-                    robot.moveVertical(lsy1*0.5);
-                } else if (lsx1 != 0) {
-                    robot.moveHorizontal(lsx1*0.5);
-                } else if (rsx1 != 0) {
-                    robot.rotate(rsx1*0.5);
-                } else {
-                    robot.stopMoving();
-                }
+                double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+                double frontLeftPower = (y + x + rx) / denominator;
+                double backLeftPower = (y - x + rx) / denominator;
+                double frontRightPower = (y - x - rx) / denominator;
+                double backRightPower = (y + x - rx) / denominator;
 
-                /*while (lsy1 < 0) {
-                    robot.moveForward(-lsy1, globalAngle, telemetry);
-                }
-
-                while (lsy1 > 0) {
-                    robot.moveBackward(-lsy1, globalAngle, telemetry);
-                }
-
-                while (lsx1 > 0) {
-                    robot.moveRight(lsx1, globalAngle, telemetry);
-                }
-
-                while (lsx1 < 0) {
-                    robot.moveLeft(lsx1, globalAngle, telemetry);
-                }
-
-                if (rsx1 != 0) {
-                    robot.rotate(rsx1*0.5);
-                }*/
+                robot.frontLeft.setPower(frontLeftPower);
+                robot.backLeft.setPower(backLeftPower);
+                robot.frontRight.setPower(frontRightPower);
+                robot.backRight.setPower(backRightPower);
 
                 telemetry.addData("LSY1:", lsy1);
                 telemetry.addData("LSX1:", lsx1);
@@ -133,6 +107,10 @@ public class BFTeleOp extends LinearOpMode{
                 telemetry.addData("SR Encoder", robot.slideRight.getCurrentPosition());
                 telemetry.addData("SR Power", robot.slideRight.getPower());
                 telemetry.addData("Intake Power", robot.intake.getPower());
+                telemetry.addData("Intake Servo Power", robot.intakeRight.getPower());
+                telemetry.addData("Arm Power", robot.arm.getPower());
+                telemetry.addData("Box Claw Power", robot.boxClaw.getPower());
+                telemetry.addData("Paper Airplane Power", robot.paperAirplane.getPower());
                 telemetry.addData("Status", "Running");
                 telemetry.update();
 
@@ -143,7 +121,6 @@ public class BFTeleOp extends LinearOpMode{
 
         slideThread.interrupt();
         intakeThread.interrupt();
-        airplane.interrupt();
     }
 
     private class slideThread extends Thread {
@@ -172,7 +149,10 @@ public class BFTeleOp extends LinearOpMode{
                     if (rsy2 != 0) {
                         robot.slideLeft.setPower(rsy2);
                         robot.slideRight.setPower(-rsy2);
-                    } //else {
+                    } else {
+                        robot.slideLeft.setPower(0);
+                        robot.slideRight.setPower(0);//else {
+                    }
                         //if (robot.RLAmotor.getCurrentPosition() != robot.LLAmotor.getCurrentPosition()) {
                           //  robot.LLAmotor.setPower((robot.LLAmotor.getCurrentPosition() - robot.RLAmotor.getCurrentPosition())*0.001);
                         //}
@@ -240,58 +220,37 @@ public class BFTeleOp extends LinearOpMode{
                     } else {
                         //robot.clawArm.setPower(0.01);
                     }
-                    idle();
-                }
-            }
-            catch (Exception e) {e.printStackTrace();}
-        }
-    }
-
-    private class airplane extends Thread {
-        BruteForceRobot robot = new BruteForceRobot(hardwareMap);
-
-        public airplane() {
-            this.setName("airplane");
-            RobotLog.d("%s", this.getName());
-        }
-
-        @Override
-        public void run() {
-            try {
-                while(!isInterrupted()) {
-                    //Paper Airplane Thread
-
-                    lsy1 = gamepad1.left_stick_y;
-                    lsx1 = gamepad1.left_stick_x;
-                    rsy1 = gamepad1.right_stick_y;
-                    rsx1 = gamepad1.right_stick_x;
-                    lsy2 = gamepad2.left_stick_y;
-                    lsx2 = gamepad2.left_stick_x;
-                    rsy2 = gamepad2.right_stick_y;
-                    rsx2 = gamepad2.right_stick_x;
 
                     if (gamepad2.a) {
-                        robot.intakeLeft.setPower(-1); //up
+                        robot.arm.setPower(-1); //up
                     }
 
                     if (gamepad2.b) {
-                        robot.intakeLeft.setPower(1); //down
+                        robot.arm.setPower(1); //down
                     }
 
                     if (gamepad2.x) {
-                        robot.intakeRight.setPower(-0.3); //down
+                        robot.intakeRight.setPower(-0.35); //down
                     }
 
                     if (gamepad2.y) {
-                        robot.intakeRight.setPower(0); //up
+                        robot.intakeRight.setPower(0.1); //up
                     }
 
                     if (gamepad2.right_bumper) {
-                        robot.paperAirplane.setPower(-1);
+                        robot.boxClaw.setPower(-1);
                     }
 
                     if(gamepad2.left_bumper) {
+                        robot.boxClaw.setPower(1);
+                    }
+
+                    if (gamepad1.right_bumper) {
                         robot.paperAirplane.setPower(1);
+                    }
+
+                    if (gamepad1.left_bumper) {
+                        robot.paperAirplane.setPower(-1);
                     }
 
                     idle();

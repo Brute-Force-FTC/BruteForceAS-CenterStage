@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Blinker;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
@@ -50,8 +51,6 @@ public class BasicAuto extends LinearOpMode{
         telemetry.addData("imu calib status", robot.imu.getCalibrationStatus().toString());
         telemetry.update();
         waitForStart();
-        robot.resetEncoder();
-        robot.runUsingEncoder();
         sleep(2500);
         int pos = utils.returnTSEPositionRDA(opModeIsActive(), telemetry);
         telemetry.addData("pos", pos);
@@ -59,21 +58,20 @@ public class BasicAuto extends LinearOpMode{
 
         robot.resetAngle(globalAngle);
         correction = robot.checkDirectionB(globalAngle, telemetry);
+        robot.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //robot.encoderDriveIMU("f", globalAngle, 10, 1, opModeIsActive(), telemetry);
 
-        robot.encoderDriveIMU("f", globalAngle, 24,  0.5, opModeIsActive(), telemetry);
-        sleep(1000);
-        robot.encoderDriveIMU("b", globalAngle,10, 0.5, opModeIsActive(), telemetry);
-        sleep(1000);
-        robot.encoderDriveIMU("r", globalAngle,10, 0.5, opModeIsActive(), telemetry); //rot left
-        sleep(1000);
-        robot.encoderDriveIMU("l", globalAngle,10, 0.5, opModeIsActive(), telemetry); //str right
-        sleep(1000);
-        robot.encoderDriveIMU("rr", globalAngle,10, 0.5, opModeIsActive(), telemetry); //turn left
-        sleep(1000);
-        robot.encoderDriveIMU("rl", globalAngle,10, 0.5, opModeIsActive(), telemetry); //turn right
-        sleep(1000);
+        robot.frontLeft.setPower(1);
+        robot.frontRight.setPower(1);
+        robot.backLeft.setPower(1);
+        robot.backRight.setPower(1);
+        sleep(5000);
+        robot.frontLeft.setPower(0);
+        robot.frontRight.setPower(0);
+        robot.backLeft.setPower(0);
+        robot.backRight.setPower(0);
 
         //robot.intakeLeft.setPower(-1);
 

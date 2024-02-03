@@ -71,6 +71,8 @@ public class BruteForceRobot {
     public CRServo intakeRight;
     public CRServo paperAirplane;
     //public CRServo testServo;
+    public CRServo arm;
+    public CRServo boxClaw;
 
     static final double     COUNTS_PER_MOTOR_REV    = 537.6 ;
     static final double     COUNTS_PER_REV          = 10;
@@ -103,6 +105,8 @@ public class BruteForceRobot {
         intakeRight = hardwareMap.get(CRServo.class, "IntakeRight");
         paperAirplane = hardwareMap.get(CRServo.class, "paperAirplane");
         //testServo = hardwareMap.get(CRServo.class, "testServo");
+        arm = hardwareMap.get(CRServo.class, "arm");
+        boxClaw = hardwareMap.get(CRServo.class, "boxClaw");
         imu.initialize(parameters);
     }
 
@@ -255,7 +259,7 @@ public class BruteForceRobot {
         slideLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideLeft.setTargetPosition(n);
         slideLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideLeft.setPower(0); //set to 1 or -1 depending on what power is needed to go up
+        slideLeft.setPower(-1); //set to 1 or -1 depending on what power is needed to go up
         while (slideLeft.isBusy()) {
             ;
         }
@@ -267,7 +271,7 @@ public class BruteForceRobot {
         slideRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         slideRight.setTargetPosition(n);
         slideRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        slideRight.setPower(0); //set to 1 or -1 depending on what power is needed to go up
+        slideRight.setPower(-1); //set to 1 or -1 depending on what power is needed to go up
         while (slideRight.isBusy()) {
             ;
         }

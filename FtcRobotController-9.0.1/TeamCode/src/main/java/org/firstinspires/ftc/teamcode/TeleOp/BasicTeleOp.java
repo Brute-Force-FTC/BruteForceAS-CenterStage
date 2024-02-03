@@ -1,108 +1,122 @@
 package org.firstinspires.ftc.teamcode.TeleOp;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.Blinker;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
-import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp
-public class BasicTeleOp extends LinearOpMode{
-    private Gyroscope imu;
-    private DcMotor frontLeft;
-    private DcMotor frontRight;
-    private DcMotor backLeft;
-    private DcMotor backRight;
-    private Blinker expansion_Hub_2;
-    private Blinker controlHub;
-    private HardwareDevice webcam_1;
-    private CRServo clawServo;
-    private DcMotor RLAmotor;
-    private DcMotor LLAmotor;
-    private DcMotor clawArm;
-    private DcMotor testMotor;
+import org.firstinspires.ftc.teamcode.Utilities.BruteForceRobot;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 
-
-
+/**
+ * This is a simple teleop routine for testing localization. Drive the robot around like a normal
+ * teleop routine and make sure the robot's estimated pose matches the robot's actual pose (slight
+ * errors are not out of the ordinary, especially with sudden drive motions). The goal of this
+ * exercise is to ascertain whether the localizer has been configured properly (note: the pure
+ * encoder localizer heading may be significantly off if the track width has not been tuned).
+ */
+@TeleOp(group = "drive")
+public class BasicTeleOp extends LinearOpMode {
     @Override
-    public void runOpMode() {
-        imu = hardwareMap.get(Gyroscope.class, "imu");
-        controlHub = hardwareMap.get(Blinker.class, "Control Hub");
-        expansion_Hub_2 = hardwareMap.get(Blinker.class, "Expansion Hub 2");
-        webcam_1 = hardwareMap.get(HardwareDevice.class, "Webcam 1");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        clawServo = hardwareMap.get(CRServo.class, "clawServo");
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        RLAmotor = hardwareMap.get(DcMotor.class, "RLAmotor");
-        LLAmotor = hardwareMap.get(DcMotor.class, "LLAmotor");
-        clawArm = hardwareMap.get(DcMotor.class, "clawArm");
-        testMotor = hardwareMap.get(DcMotor.class, "testMotor");
+    public void runOpMode() throws InterruptedException {
+        BruteForceRobot robot = new BruteForceRobot(hardwareMap);
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        robot.slideLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.slideRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        while (opModeIsActive()) {
-            double lsy1 = this.gamepad1.left_stick_y;
-            double lsx1 = this.gamepad1.left_stick_x;
-            double rsy1 = this.gamepad1.right_stick_y;
-            double rsx1 = this.gamepad1.right_stick_x;
-            double lsy2 = this.gamepad2.left_stick_y;
-            double lsx2 = this.gamepad2.left_stick_x;
-            double rsy2 = this.gamepad2.right_stick_y;
-            double rsx2 = this.gamepad2.right_stick_x;
-            if (lsy1 != 0) {
-                frontLeft.setPower(lsy1);
-                frontRight.setPower(-lsy1);
-                backLeft.setPower(lsy1);
-                backRight.setPower(-lsy1);
-            } else if (lsx1 != 0) {
-                frontLeft.setPower(-lsx1);
-                frontRight.setPower(-lsx1);
-                backLeft.setPower(lsx1);
-                backRight.setPower(lsx1);
-            } else if (rsx1 != 0) {
-                frontLeft.setPower(rsx1);
-                frontRight.setPower(rsx1);
-                backLeft.setPower(rsx1);
-                backRight.setPower(rsx1);
-                //} else if (rsy2 != 0) {
-                //RLAmotor.setPower(-rsy2);
-                //LLAmotor.setPower(rsy2);
+        while (!isStopRequested()) {
+            double lsy1 = gamepad1.left_stick_y;
+            double lsx1 = gamepad1.left_stick_x;
+            double rsy1 = gamepad1.right_stick_y;
+            double rsx1 = gamepad1.right_stick_x;
+            double lsy2 = gamepad2.left_stick_y;
+            double lsx2 = gamepad2.left_stick_x;
+            double rsy2 = gamepad2.right_stick_y;
+            double rsx2 = gamepad2.right_stick_x;
+
+            drive.setWeightedDrivePower(
+                    new Pose2d(
+                            gamepad1.left_stick_y,
+                            gamepad1.left_stick_x,
+                            gamepad1.right_stick_x
+                    )
+            );
+
+            if (rsy2 != 0) {
+                robot.slideLeft.setPower(rsy2*0.25);
+                robot.slideRight.setPower(-rsy2*0.25);
             } else {
-                frontLeft.setPower(0);
-                frontRight.setPower(0);
-                backLeft.setPower(0);
-                backRight.setPower(0);
-                RLAmotor.setPower(0);
-                LLAmotor.setPower(0);
+                robot.slideLeft.setPower(0);
+                robot.slideRight.setPower(0);//else {
             }
 
-            telemetry.addData("LSY1:", lsy1);
-            telemetry.addData("LSX1:", lsx1);
-            telemetry.addData("RSY1:", rsy1);
-            telemetry.addData("RSX1:", rsx1);
-            telemetry.addData("LSY2:", lsy2);
-            telemetry.addData("LSX2:", lsx2);
-            telemetry.addData("RSY2:", rsy2);
-            telemetry.addData("RSX2:", rsx2);
-            telemetry.addData("frontLeft Power", frontLeft.getPower());
-            telemetry.addData("frontRight Power", frontRight.getPower());
-            telemetry.addData("backLeft Power", backLeft.getPower());
-            telemetry.addData("backRight Power", backRight.getPower());
-            telemetry.addData("LLA Encoder", LLAmotor.getCurrentPosition());
-            telemetry.addData("RLA Encoder", RLAmotor.getCurrentPosition());
-            telemetry.addData("Status", "Running");
+            if (robot.slideLeft.getCurrentPosition() < -2000 || robot.slideRight.getCurrentPosition() > 2000) {
+                robot.encoderSL(-1900);
+                robot.encoderSR(1900);
+            } else if (robot.slideLeft.getCurrentPosition() > 10 || robot.slideRight.getCurrentPosition() < -10) {
+                robot.encoderSL(-90);
+                robot.encoderSR(90 );
+            }
+
+            if (gamepad1.x) {
+                robot.encoderSL(-1000);
+                robot.encoderSR(1000);
+
+            }
+
+            if (lsy2 != 0) {
+                robot.intake.setPower(lsy2*0.75);
+            } else {
+                robot.intake.setPower(0);
+            }
+
+            if (gamepad2.a) {
+                robot.arm.setPower(-1); //up
+            }
+
+            if (gamepad2.b) {
+                robot.arm.setPower(1); //down
+            }
+
+            if (gamepad2.x) {
+                robot.intakeRight.setPower(-0.35); //down
+            }
+
+            if (gamepad2.y) {
+                robot.intakeRight.setPower(0.1); //up
+            }
+
+            if (gamepad2.right_bumper) {
+                robot.boxClaw.setPower(-1);
+            }
+
+            if(gamepad2.left_bumper) {
+                robot.boxClaw.setPower(1);
+            }
+
+            if (gamepad1.right_bumper) {
+                robot.paperAirplane.setPower(1);
+            }
+
+            if (gamepad1.left_bumper) {
+                robot.paperAirplane.setPower(-1);
+            }
+
+            drive.update();
+
+            Pose2d poseEstimate = drive.getPoseEstimate();
+            telemetry.addData("x", poseEstimate.getX());
+            telemetry.addData("y", poseEstimate.getY());
+            telemetry.addData("heading", poseEstimate.getHeading());
+            telemetry.addData("SL Encoder", robot.slideLeft.getCurrentPosition());
+            telemetry.addData("SL Power", robot.slideLeft.getPower());
+            telemetry.addData("SR Encoder", robot.slideRight.getCurrentPosition());
+            telemetry.addData("SR Power", robot.slideRight.getPower());
             telemetry.update();
         }
     }
