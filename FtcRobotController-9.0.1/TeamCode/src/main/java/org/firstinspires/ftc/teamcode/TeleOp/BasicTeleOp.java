@@ -55,12 +55,14 @@ public class BasicTeleOp extends LinearOpMode {
                 robot.slideRight.setPower(0);//else {
             }
 
-            if (robot.slideLeft.getCurrentPosition() < -2000 || robot.slideRight.getCurrentPosition() > 2000) {
-                robot.encoderSL(-1900);
-                robot.encoderSR(1900);
-            } else if (robot.slideLeft.getCurrentPosition() > 10 || robot.slideRight.getCurrentPosition() < -10) {
-                robot.encoderSL(-90);
-                robot.encoderSR(90 );
+            while (gamepad1.left_bumper) {
+                if (robot.slideLeft.getCurrentPosition() < -2100 || robot.slideRight.getCurrentPosition() > 2100) {
+                    robot.encoderSL(-2000);
+                    robot.encoderSR(2000);
+                } else if (robot.slideLeft.getCurrentPosition() > -10 || robot.slideRight.getCurrentPosition() < 10) {
+                    robot.encoderSL(-110);
+                    robot.encoderSR(110);
+                }
             }
 
             if (gamepad1.x) {
@@ -97,6 +99,10 @@ public class BasicTeleOp extends LinearOpMode {
 
             if(gamepad2.left_bumper) {
                 robot.boxClaw.setPower(1);
+            }
+
+            if (gamepad2.dpad_up) {
+                robot.boxClaw.setPower(0);
             }
 
             if (gamepad1.right_bumper) {
